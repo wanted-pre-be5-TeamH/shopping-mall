@@ -47,7 +47,7 @@ model Order {
   couponId Int
   coupon Coupon @relation(fields: [couponId], references: [id])
 
-  orderlist OrderList[]
+  orderitem OrderItem[]
   @@map("orders")
 }
 
@@ -78,7 +78,7 @@ model User {
   @@map("users")
 }
 
-model OrderList {
+model OrderItem {
   id        Int      @id @default(autoincrement())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -90,7 +90,7 @@ model OrderList {
   orderId Int
   order Order @relation(fields: [orderId], references: [id])
 
-  @@map("orderlists")
+  @@map("orderitems")
 }
 
 
