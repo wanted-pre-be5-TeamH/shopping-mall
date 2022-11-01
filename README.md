@@ -2,7 +2,13 @@
 - 제품 쇼핑몰 관리페이지의 백엔드 개발
 - 기능 : 주문 관리 서비스, 쿠폰 관리 서비스
 
-## 2. API 명세
+## 2. 백엔드 프로젝트 구성
+1) 서버 : Nestjs
+2) DB : PostgreSQL (Docker)
+3) ORM : Prisma
+4) Unit Test : Pactum
+
+## 3. API 명세
 
 | INDEX | METHOD | URI | DESCRIPTION | REMARK |
 | --- | --- | --- | --- | --- |
@@ -22,7 +28,7 @@
 | 14 | POST | /api/coupons/:userId | 특정 신규 쿠폰 코드 발급 |  |
 | 15 | GET | /api/coupons/:type | 쿠폰 타입별 사용 횟수 및 총 할인액 조회 |  |
 
-## 3. ERD 설계
+## 4. ERD 설계
 
 | Coupon |  |  |
 | --- | --- | --- |
