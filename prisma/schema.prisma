@@ -1,0 +1,96 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Coupon {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  name     String
+  type     String
+  isUsed   Boolean
+  usedAt   DateTime?
+  expireAt DateTime
+
+  userId Int
+  user User @relation(fields: [userId], references: [id])
+
+  order Order[]
+  @@map("coupons")
+}
+
+model Order {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  userName      String
+  status        String
+  countryCode   String
+  countryName   String
+  address       String
+  quantities    Int
+  price         Int
+  deliveryPrice Int
+
+  userId   Int
+  user User @relation(fields: [userId], references: [id])
+  couponId Int
+  coupon Coupon @relation(fields: [couponId], references: [id])
+
+  orderlist OrderList[]
+  @@map("orders")
+}
+
+model DeliveryPrice {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  countryCode String
+  quantity    Int
+  price       Int
+
+  @@map("deliveryprices")
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  email String @unique
+  hash  String
+  name  String
+
+  coupon Coupon[]
+  order Order[]
+
+  @@map("users")
+}
+
+model OrderList {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  productId   Int
+  productName String
+  price       Int
+
+  orderId Int
+  order Order @relation(fields: [orderId], references: [id])
+
+  @@map("orderlists")
+}
+
+
