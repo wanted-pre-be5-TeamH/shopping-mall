@@ -1,3 +1,6 @@
+## 개발 Notion Link
+https://mellow-deer-e21.notion.site/2-7689659410654c6189d8a6ca0f14d10d
+
 ## 1. 프로젝트 목적
 - 제품 쇼핑몰 관리페이지의 백엔드 개발
 - 기능 : 주문 관리 서비스, 쿠폰 관리 서비스
