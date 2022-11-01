@@ -1,6 +1,8 @@
 
 ## API 명세
 
+
+API 명세				
 INDEX	METHOD	URI	DESCRIPTION	REMARK
 1	GET	/api/orders	제품 주문 내역 열람 (전체)	
 2	GET	/api/orders/:userId	제품 주문 내역 열람 (사용자)	
@@ -17,6 +19,7 @@ INDEX	METHOD	URI	DESCRIPTION	REMARK
 12	PATCH	/api/coupons/:id	쿠폰 관리 - 쿠폰 내용 변경	
 13	DELETE	/api/coupons/:id	쿠폰 관리 - 쿠폰 삭제	
 14	POST	/api/coupons/:userId	특정 신규 쿠폰 코드 발급	
-15	GET	/api/coupons/:type	쿠폰 타입별 사용 횟수 및 총 할인액 조회	
+15	GET	/api/coupons/:type	쿠폰 타입별 사용 횟수 및 총 할인액 조회	![image](https://user-images.githubusercontent.com/90499822/199220880-4c5fbd00-b7f2-4036-898a-f52f4cc5303d.png)
+
 
 
