@@ -19,34 +19,38 @@ export class OrderController {
     return this.orderService.findAllByUserId(userId);
   }
 
-    // 3. 주문 내역 검색
+  // 3. 주문 내역 검색
   @Get(':userId/:orderName')
   findAllByOrderName(@Param('orderName') orderName: string) {
     return this.orderService.findAllByOrderName(orderName);
   }
 
-      // 4. 주문 상태, 시작일자~종료일자에 따른 필터
-      @Get(':userId/:status/:createdAt/:finishedAt')
-      findAllByConditions(@Param('status') status: string) {
-        return this.orderService.findAllByStatus(status);
-      }
+  // 4. 주문 상태, 시작일자~종료일자에 따른 필터
+  @Get(':userId/:status/:createdAt/:finishedAt')
+  findAllByConditions(@Param('status') status: string) {
+    return this.orderService.findAllByStatus(status);
+  }
 
-    
+  // 5. 주문자명으로 검색
+  @Get(':userName')
+  findAllByUserName(@Param('userName') userName: string) {
+    return this.orderService.findAllByUserName(userName);
+  }
 
+  // 6. 제품 배송 상태 업데이트, 주문 건에 대해 발송처리 (배송중, 배송완료 등 수정)
+    @Patch(':id')
+  update(@Param('id') id: number, @Body() updateOrderDto: UpdateOrderDto) {
+    return this.orderService.update(id, updateOrderDto);
+  }
 
-  // 9. 구매하기 (쿠폰 사용에 따른 할인, 배송비 적용)
+  // 7. 구매하기 (쿠폰 사용에 따른 할인, 배송비 적용)
   @Post()
   create(@Body() createOrderDto: CreateOrderDto) {
     return this.orderService.create(createOrderDto);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateOrderDto: UpdateOrderDto) {
-    return this.orderService.update(+id, updateOrderDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.orderService.remove(+id);
-  }
+  // @Delete(':id')
+  // remove(@Param('id') id: string) {
+  //   return this.orderService.remove(+id);
+  // }
 }

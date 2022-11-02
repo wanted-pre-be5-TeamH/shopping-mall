@@ -16,46 +16,105 @@ export class OrderService {
   // 1. 제품 주문 내역 열람 (전체)
   async findAll() {
     try {
-      const order = await this.prisma.order.findMany();
-      return order;
+      const orders = await this.prisma.order.findMany();
+      return orders;
     } catch (err) {
-      console.log(err)
+      if (err instanceof PrismaClientKnownRequestError) {
+        console.log(`Order findAll Err : ${err}`)
+      }
+      throw err;
     }
   }
 
   // 2. 제품 주문 내역 열람 (사용자)
   async findAllByUserId(userId: number) {
-    const userOrder = await this.prisma.order.findMany({
-      where: {
-        userId
+    try {
+      const userOrders = await this.prisma.order.findMany({
+        where: {
+          userId
+        }
+      })
+      return userOrders;
+    } catch (err) {
+      if (err instanceof PrismaClientKnownRequestError) {
+        console.log(`Order findAllByUserId Err : ${err}`)
       }
-    })
-    return userOrder;
+      throw err;
+    }
   }
 
   // 3. 주문 내역 검색
   async findAllByOrderName(orderName: string) {
-    const orderSearchResultByName = await this.prisma.order.findMany({
-      where: {
-        orderName
+    try {
+      const orderSearchResultByName = await this.prisma.order.findMany({
+        where: {
+          orderName
+        }
+      })
+      return orderSearchResultByName;
+    } catch (err) {
+      if (err instanceof PrismaClientKnownRequestError) {
+        console.log(`Order findAllByOrderName Err : ${err}`)
       }
-    })
-    return orderSearchResultByName;
+      throw err;
+    }
   }
 
-      // 4. 주문 상태, 시작일자~종료일자에 따른 필터
+  // 4. 주문 상태, 시작일자~종료일자에 따른 필터
   async findAllByStatus(status: string) {
-    const orderSearchResultByStatus = await this.prisma.order.findMany({
-      where: {
-        status
+    try {
+      const orderSearchResultByStatus = await this.prisma.order.findMany({
+        where: {
+          status
+        }
+      })
+      return orderSearchResultByStatus;
+    } catch (err) {
+      if (err instanceof PrismaClientKnownRequestError) {
+        console.log(`Order findAllByStatus Err : ${err}`)
       }
-    })
-    return orderSearchResultByStatus;
+      throw err;
+    }
   }
 
-   
+  // 5. 주문자명으로 검색
+  async findAllByUserName(userName: string) {
+    try {
+      const orderSearchResultByUserName = await this.prisma.order.findMany({
+        where: {
+          userName
+        }
+      })
+      return orderSearchResultByUserName;
+    } catch (err) {
+      if (err instanceof PrismaClientKnownRequestError) {
+        console.log(`Order findAllByUserName Err : ${err}`)
+      }
+      throw err;
+    }
+  }
 
-  // 9. 구매하기 (쿠폰 사용에 따른 할인, 배송비 적용)
+  // 6. 제품 배송 상태 업데이트, 주문 건에 대해 발송처리 (배송중, 배송완료 등 수정)
+  async update(id: number, updateOrderDto: UpdateOrderDto) {
+    try {
+      const updateResult = await this.prisma.order.update({
+        where: {
+          id
+        },
+        data: {
+          status: updateOrderDto.status
+        }
+      })
+      return updateResult.status;
+    } catch (err) {
+      if (err instanceof PrismaClientKnownRequestError) {
+        console.log(`Order Update Err : ${err}`)
+      }
+      throw err;
+    }
+  }
+
+  // 7. 구매하기 (쿠폰 사용에 따른 할인, 배송비 적용)
   async create(dto: CreateOrderDto) {
     try {
       // 수량 별 배송비 책정
@@ -114,17 +173,13 @@ export class OrderService {
       return order;
     } catch (err) {
       if (err instanceof PrismaClientKnownRequestError) {
-        console.log(err)
+        console.log(`Order Create Err : ${err}`)
       }
       throw err;
     }
   }
 
-  update(id: number, updateOrderDto: UpdateOrderDto) {
-    return `This action updates a #${id} order`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} order`;
-  }
+  // remove(id: number) {
+  //   return `This action removes a #${id} order`;
+  // }
 }
