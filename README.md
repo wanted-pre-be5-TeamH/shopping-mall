@@ -55,15 +55,15 @@ https://mellow-deer-e21.notion.site/2-7689659410654c6189d8a6ca0f14d10d
 | address | string |  |
 | quantities | number |  |
 | price | number | 원화 기준(한국) |
-| deliveryPrice | number |  |
+| deliveryCost | number |  |
 
-| DeliveryPrice |  |  |
+| DeliveryCost |  |  |
 | --- | --- | --- |
 | Column | Type | Description |
 | id | number |  |
 | countryCode | string |  |
 | quantity | number |  |
-| price | number |  |
+| cost | number |  |
 
 | User |  |  |
 | --- | --- | --- |
