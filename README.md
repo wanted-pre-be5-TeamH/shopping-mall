@@ -18,7 +18,7 @@ https://mellow-deer-e21.notion.site/2-7689659410654c6189d8a6ca0f14d10d
 | 1 | GET | /api/order | 제품 주문 내역 열람 (전체) | O |
 | 2 | GET | /api/order/:userId | 제품 주문 내역 열람 (사용자) | O |
 | 3 | GET | /api/order/:userId/:name | 주문 내역 검색 | O |
-| 4 | GET | /api/order/:userId/:status/:createdAt/:finishedAt | 주문상태, 시작일자, 종료일자에 따른 필터 | △ |
+| 4 | GET | /api/order/:userId/:status/:createdAt/:finishedAt | 주문상태, 시작일자, 종료일자에 따른 필터 | O |
 | 5 | GET | /api/order/:userName | 주문자명으로 검색 | O |
 | 6 | PATCH | /api/order/:status | 제품 배송 상태 업데이트, 주문 건에 대하여 발송 처리,  배송중/배송완료 등 수정 | O |
 | 7 | POST | /api/order | 구매하기 (쿠폰 사용에 따른 할인, 배송비 적용) | O |
