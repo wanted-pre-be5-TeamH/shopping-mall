@@ -72,3 +72,12 @@ https://mellow-deer-e21.notion.site/2-7689659410654c6189d8a6ca0f14d10d
 | email | string |  |
 | hash | string |  |
 | name | string |  |
+
+## 미비 사항 및 추후 적용 예정 사항
+- URI path에 /api 공통으로 넣기
+- 서비스 Exception, Response 처리
+- 외래 키가 Nullable일 때, 외래키의 객체 처리 방법? (Order의 couponId와 coupon)
+- Unit Test 구현 (Pactumjs) 및 예외 사항 보완
+- 쿠폰을 사용하여 주문 처리 시, 쿠폰 상태도 함께 변경(isUsed true) → 테스트 필요
+- @Param()으로 받는 파라미터가 Nullable인 경우 처리 방법 확인
+- Param은 path 명시인 경우 처리(예:id나 자원 이름인경우?)하도록 하고, 조회 조건이 되는 데이터는 Param이 아닌 Query로 넘기도록 수정 (필터 조회 서비스 부분)
