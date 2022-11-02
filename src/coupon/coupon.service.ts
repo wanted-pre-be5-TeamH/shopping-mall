@@ -130,7 +130,7 @@ export class CouponService {
       return result;
     } catch (err) {
       if (err instanceof PrismaClientKnownRequestError) {
-        console.log(`Coupon findAllById Err : ${err}`)
+        console.log(`Coupon findUsedCountAndTotalDiscountByType Err : ${err}`)
       }
       throw err;
     }

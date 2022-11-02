@@ -61,11 +61,19 @@ export class OrderService {
   }
 
   // 4. 주문 상태, 시작일자~종료일자에 따른 필터
-  async findAllByStatus(status: string) {
+  async findAllByConditions(
+    status: string,
+    startAt: Date,
+    endAt: Date,
+  ) {
     try {
       const orderSearchResultByStatus = await this.prisma.order.findMany({
         where: {
-          status
+          status,
+          updatedAt: {
+            lte: startAt,
+            gte: endAt,
+          }
         }
       })
       return orderSearchResultByStatus;
@@ -124,29 +132,36 @@ export class OrderService {
           quantity: dto.quantities
         }
       })
+      let cost = 0;
+      if (deliveryCost) {
+        cost = deliveryCost.cost;
+      }
 
       // 쿠폰 할인 적용
-      const usedCoupon = await this.prisma.coupon.findFirst({
+      const selectedCoupon = await this.prisma.coupon.findFirst({
         where: {
           id: dto.couponId,
+          isUsed: false
         }
       })
       let isDiscountDelivery = false;
       let discountAmount = 0;
       let discountPercentage = 0;
-      const now = new Date();
-      // 쿠폰 유효기간 체크
-      let isExpired = usedCoupon.expireAt > now ? false : true;
-      if (usedCoupon && !isExpired) {
-        if (usedCoupon.type === 'delivery') {
-          // 배송비 쿠폰
-          isDiscountDelivery = true;
-        } else if (usedCoupon.type === 'subscription') {
-          // 정액 할인
-          discountAmount = usedCoupon.discountAmount;
-        } else if (usedCoupon.type === 'percentage') {
-          // % 할인
-          discountPercentage = usedCoupon.discountAmount * 0.01;
+      if (selectedCoupon) {
+        const now = new Date();
+        // 쿠폰 유효기간 체크
+        const isExpired = selectedCoupon.expireAt > now ? false : true;
+        if (selectedCoupon && !isExpired) {
+          if (selectedCoupon.type === 'delivery') {
+            // 배송비 쿠폰
+            isDiscountDelivery = true;
+          } else if (selectedCoupon.type === 'subscription') {
+            // 정액 할인
+            discountAmount = selectedCoupon.discountAmount;
+          } else if (selectedCoupon.type === 'percentage') {
+            // % 할인
+            discountPercentage = selectedCoupon.discountAmount * 0.01;
+          }
         }
       }
 
@@ -154,7 +169,7 @@ export class OrderService {
         data: {
           userId: dto.userId,
           couponId: dto.couponId,
-          deliveryCost: isDiscountDelivery ? 0 : deliveryCost.cost,
+          deliveryCost: isDiscountDelivery ? 0 : cost,
           // 100원인데 10퍼 할인 적용이면 100 - 100*0.1 - 0 = 90원
           price: dto.price - dto.price * discountPercentage - discountAmount,
           ...dto,

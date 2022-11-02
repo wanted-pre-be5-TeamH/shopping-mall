@@ -26,9 +26,13 @@ export class OrderController {
   }
 
   // 4. 주문 상태, 시작일자~종료일자에 따른 필터
-  @Get(':userId/:status/:createdAt/:finishedAt')
-  findAllByConditions(@Param('status') status: string) {
-    return this.orderService.findAllByStatus(status);
+  @Get(':userId/:status/:createdAt/:updatedAt')
+  findAllByConditions(
+    @Param('status') status: string,
+    @Param('startAt') startAt: Date,
+    @Param('endAt') endAt: Date
+  ) {
+    return this.orderService.findAllByConditions(status, startAt, endAt);
   }
 
   // 5. 주문자명으로 검색
