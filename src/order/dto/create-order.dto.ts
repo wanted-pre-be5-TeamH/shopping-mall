@@ -1,6 +1,7 @@
 export class CreateOrderDto {
     userId: number;
     couponId?: number;
+    orderName: string;
     userName: string;
     status: string; //canceled, accept, preparing, delivering, arrived, refunded
     countryCode: string;
@@ -8,5 +9,5 @@ export class CreateOrderDto {
     address: string;
     quantities: number;
     price: number;
-    deliveryPrice: number;
+    deliveryCost: number;
 }

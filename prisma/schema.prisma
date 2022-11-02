@@ -17,6 +17,7 @@ model Coupon {
 
   name     String
   type     String
+  discountAmount Int
   isUsed   Boolean
   usedAt   DateTime?
   expireAt DateTime
@@ -33,6 +34,7 @@ model Order {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
+  orderName     String
   userName      String
   status        String
   countryCode   String
@@ -40,27 +42,27 @@ model Order {
   address       String
   quantities    Int
   price         Int
-  deliveryPrice Int
+  deliveryCost Int
 
   userId   Int
   user User @relation(fields: [userId], references: [id])
   couponId Int
   coupon Coupon @relation(fields: [couponId], references: [id])
 
-  orderitem OrderItem[]
+  // orderitem OrderItem[]
   @@map("orders")
 }
 
-model DeliveryPrice {
+model DeliveryCost {
   id        Int      @id @default(autoincrement())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  countryCode String
+  countryName String
   quantity    Int
-  price       Int
+  cost       Int
 
-  @@map("deliveryprices")
+  @@map("deliverycosts")
 }
 
 model User {
@@ -78,19 +80,19 @@ model User {
   @@map("users")
 }
 
-model OrderItem {
-  id        Int      @id @default(autoincrement())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+// model OrderItem {
+//   id        Int      @id @default(autoincrement())
+//   createdAt DateTime @default(now())
+//   updatedAt DateTime @updatedAt
 
-  productId   Int
-  productName String
-  price       Int
+//   productId   Int
+//   productName String
+//   price       Int
 
-  orderId Int
-  order Order @relation(fields: [orderId], references: [id])
+//   orderId Int
+//   order Order @relation(fields: [orderId], references: [id])
 
-  @@map("orderitems")
-}
+//   @@map("orderitems")
+// }
 
 
