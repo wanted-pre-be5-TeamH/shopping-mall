@@ -61,7 +61,7 @@ https://mellow-deer-e21.notion.site/2-7689659410654c6189d8a6ca0f14d10d
 | --- | --- | --- |
 | Column | Type | Description |
 | id | number |  |
-| countryCode | string |  |
+| countryName | string |  |
 | quantity | number |  |
 | cost | number |  |
 
