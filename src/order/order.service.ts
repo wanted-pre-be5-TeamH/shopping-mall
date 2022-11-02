@@ -123,7 +123,7 @@ export class OrderService {
   }
 
   // 7. 구매하기 (쿠폰 사용에 따른 할인, 배송비 적용)
-  async create(dto: CreateOrderDto) {
+  async create(userId: number, couponId: number, dto: CreateOrderDto) {
     try {
       // 수량 별 배송비 책정
       const deliveryCost = await this.prisma.deliveryCost.findFirst({
@@ -140,7 +140,7 @@ export class OrderService {
       // 쿠폰 할인 적용
       const selectedCoupon = await this.prisma.coupon.findFirst({
         where: {
-          id: dto.couponId,
+          id: couponId,
           isUsed: false
         }
       })
@@ -167,8 +167,8 @@ export class OrderService {
 
       const order = await this.prisma.order.create({
         data: {
-          userId: dto.userId,
-          couponId: dto.couponId,
+          userId: userId,
+          couponId: couponId,
           deliveryCost: isDiscountDelivery ? 0 : cost,
           // 100원인데 10퍼 할인 적용이면 100 - 100*0.1 - 0 = 90원
           price: dto.price - dto.price * discountPercentage - discountAmount,

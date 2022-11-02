@@ -32,7 +32,7 @@ export class CouponController {
   }
 
   // 12. 특정 신규 쿠폰 코드 발급
-  @Post()
+  @Post(':userId')
   create(@Param() userId: number, @Body() createCouponDto: CreateCouponDto) {
     return this.couponService.create(userId, createCouponDto);
   }

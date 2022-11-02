@@ -48,9 +48,13 @@ export class OrderController {
   }
 
   // 7. 구매하기 (쿠폰 사용에 따른 할인, 배송비 적용)
-  @Post()
-  create(@Body() createOrderDto: CreateOrderDto) {
-    return this.orderService.create(createOrderDto);
+  @Post(':userId/:couponId')
+  create(
+    @Param() userId: number,
+    @Param() couponId: number,
+    @Body() createOrderDto: CreateOrderDto
+    ) {
+    return this.orderService.create(userId, couponId, createOrderDto);
   }
 
   // @Delete(':id')

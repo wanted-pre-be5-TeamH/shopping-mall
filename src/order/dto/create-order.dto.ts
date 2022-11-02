@@ -1,6 +1,4 @@
 export class CreateOrderDto {
-    userId: number;
-    couponId?: number;
     orderName: string;
     userName: string;
     status: string; //canceled, accept, preparing, delivering, arrived, refunded
